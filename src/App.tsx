@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import axios from "axios";
-import Collection from "./components/Collection";
-import callApi from "./services/callApi";
+
 import { Movie } from "./types";
+import getLatestReleases from "./services/getLatestReleases";
 
 function App() {
   // const [isOpen, setIsOpen] = useState(false);
@@ -28,27 +27,6 @@ function App() {
   //  }
   //  }
 
-  const GET_LATEST = `
-  {
-    nowPlayingMovies {
-        movies { 
-        id
-        original_title
-        original_language
-        poster_path
-        release_date
-        vote_average
-    }
-   }
-}`;
-
-  type GetLatestMovies = {
-    nowPlayingMovies: { movies: Movie[] };
-  };
-
-  const getLatestReleases = async () =>
-    callApi<GetLatestMovies>(GET_LATEST, {});
-
   useEffect(() => {
     const getData = async () => {
       const data = await getLatestReleases();
@@ -58,7 +36,7 @@ function App() {
 
     getData()
       .then((res) => {
-        console.log(res?.data);
+        console.log("latest releases ", res?.data.nowPlayingMovies.movies);
       })
       .catch((err) => err);
 
