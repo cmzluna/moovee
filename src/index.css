@@ -20,3 +20,7 @@ code {
 .btn {
   @apply rounded-full py-1 px-2 uppercase text-xs font-bold tracking-wider cursor-pointer;
 }
+
+.card-list-wrapper {
+  @apply flex flex-col items-center gap-4 sm:gap-x-7 sm:gap-y-6 xl:gap-x-10 xl:gap-y-8 2xs:flex-row 2xs:flex-wrap 2xs:justify-between;
+}

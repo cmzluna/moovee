@@ -2,52 +2,74 @@ import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import axios from "axios";
+import Collection from "./components/Collection";
+import callApi from "./services/callApi";
+import { Movie } from "./types";
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
+  const [latestReleases, setLatestReleases] = useState<Movie[]>([]);
 
-  const axiosGitHubGraphQL = axios.create({
-    baseURL: "http://localhost:3000/graphql",
-    headers: {
-      Authorization: `bearer ${process.env.TMDB_API_KEY}`,
-    },
-  });
+  const TMDB_IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/original";
+
+  const testImage = `${TMDB_IMAGE_ENDPOINT}/d9nBoowhjiiYc4FBNtQkPY7c11H.jpg`;
+
   // https://movieql.netlify.app/graphql
+
+  // {
+  //   topRatedShows {
+  //    shows {
+  //      name
+  //      original_name
+  //      original_language
+  //      overview
+  //      poster_path
+  //    }
+  //  }
+  //  }
+
   const GET_LATEST = `
   {
-    topRatedShows {
-     shows {
-       name
-       original_name
-       original_language
-       overview
-       poster_path
-     }
+    nowPlayingMovies {
+        movies { 
+        id
+        original_title
+        original_language
+        poster_path
+        release_date
+        vote_average
+    }
    }
-   }
-`;
+}`;
 
-  const getLatestReleases = () => {
-    axiosGitHubGraphQL
-      .post("", { query: GET_LATEST })
-      .then((result) => console.log(" DATA ==> ", result.data))
-      .catch((err) => console.log("ERR ==> ", err));
+  type GetLatestMovies = {
+    nowPlayingMovies: { movies: Movie[] };
   };
 
+  const getLatestReleases = async () =>
+    callApi<GetLatestMovies>(GET_LATEST, {});
+
   useEffect(() => {
-    console.log("****");
-    getLatestReleases();
+    const getData = async () => {
+      const data = await getLatestReleases();
+
+      return data;
+    };
+
+    getData()
+      .then((res) => {
+        console.log(res?.data);
+      })
+      .catch((err) => err);
+
+    //  setLatestReleases(movies);
   }, []);
 
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h1 className="text-4xl font-bold underline">Hello world!</h1>
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1 className="text-4xl font-bold underline">Hello world!</h1>
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1 className="text-4xl font-bold underline">Hello world!</h1>
+        {/* <Collection data={data} title={} isLatestReleases /> */}
       </header>
     </div>
   );

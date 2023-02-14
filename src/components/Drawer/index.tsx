@@ -17,14 +17,14 @@ const Drawer = ({ children, isOpen, setIsOpen }: Props) => {
     >
       <section
         className={
-          "border-solid border-4 border-green-500 rounded-full-2   left-0 absolute bg-white h-30 lg:h-5/6 w-full lg:w-1/4 lg:translate-x-20 shadow-xl duration-500 ease-in-out transition-all transform " +
+          "border-solid border-4  border-green-500 bg-app-dark-blue rounded-lg   left-0 absolute bg-white h-30 lg:h-5/6 w-full lg:w-1/4 lg:translate-x-20 shadow-xl duration-500 ease-in-out transition-all transform " +
           (isOpen
             ? ""
             : "-translate-y-full lg:-translate-x-0 lg:-translate-y-0")
         }
       >
-        <article className="border-solid border-2  relative  p-6 flex flex-col   justify-start  overflow-y-scroll m-2  ">
-          <header className="font-bold text-lg">Header</header>
+        <article className="border-solid  border-2  relative  p-6 flex flex-col   justify-start  overflow-y-scroll m-2  ">
+          <header className="font-bold text-lg">Your favorites</header>
           {children}
         </article>
       </section>
