@@ -4,6 +4,7 @@ import "./App.css";
 
 import { Movie } from "./types";
 import getLatestReleases from "./services/getLatestReleases";
+import Collection from "./components/Collection";
 
 function App() {
   // const [isOpen, setIsOpen] = useState(false);
@@ -36,19 +37,21 @@ function App() {
 
     getData()
       .then((res) => {
-        console.log("latest releases ", res?.data.nowPlayingMovies.movies);
+        const moviesArray = res?.data.nowPlayingMovies.movies;
+        console.log("latest releases ", moviesArray);
+
+        if (moviesArray) setLatestReleases(moviesArray);
       })
       .catch((err) => err);
-
-    //  setLatestReleases(movies);
   }, []);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {/* <Collection data={data} title={} isLatestReleases /> */}
-      </header>
+      <Collection
+        data={latestReleases}
+        title={"hellou"}
+        isLatestReleases={false}
+      />
     </div>
   );
 }

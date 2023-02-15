@@ -19,10 +19,25 @@ export default function Card({
 
   return (
     <div
-      className="card-hover-animation mb-4 grow basis-1/5 2xs:w-[130px] xs:w-full cursor-pointer"
+      className="bg-blue-900 card-hover-animation mb-4  cursor-pointer"
       onClick={handleClick}
     >
-      this is a movie card
+      <div className="relative w-full rounded-lg">
+        <div className="relative h-[133px] md:h-[140px] lg:h-[174px]">
+          {/* <Image
+          className='rounded-lg'
+          src={src}
+          alt={alt}
+          layout='fill'
+          objectFit='cover'
+          placeholder='blur'
+          blurDataURL={`data:image/svg+xml;base64,${toBase64(
+            shimmer(240, 140)
+          )}`}
+          unoptimized
+        /> */}
+        </div>
+      </div>
     </div>
   );
 }

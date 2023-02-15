@@ -15,10 +15,10 @@ export type Movie = {
 type Props = {
   data: Movie[];
   title: string;
-  type: string;
+  type?: string;
   isLatestReleases: boolean;
-  isOpen: boolean;
-  setIsOpen: (arg0: boolean) => void;
+  // isOpen: boolean;
+  // setIsOpen: (arg0: boolean) => void;
 };
 
 export default function Collection({
@@ -33,14 +33,13 @@ export default function Collection({
 
   return (
     <>
-      (
-      <section className={"mb-6 md:mb-10"}>
+      <section className="border-2 border-solid border-red-300 mb-6 md:mb-10">
         <Heading title={title} media_type={type} />
         <section
           className={
             isLatestReleases
               ? "h-scroll relative flex gap-x-4 overflow-x-scroll sm:gap-x-10 2xs:mt-2"
-              : "card-collection-wrapper"
+              : "card-list-wrapper"
           }
         >
           {data &&
@@ -57,7 +56,7 @@ export default function Collection({
             ))}
         </section>
       </section>
-      ) : (
+
       <Loading />
     </>
   );
