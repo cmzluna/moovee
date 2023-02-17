@@ -1,32 +1,26 @@
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import { Movie } from "./types";
 import getLatestReleases from "./services/getLatestReleases";
 import Collection from "./components/Collection";
+import Search from "./components/Search";
+import MovieDetail from "./components/MovieDetail";
+import Modal from "./components/Modal";
+import getAllGenres from "./services/getAllGenres";
+import { Genre } from "./types";
 
 function App() {
-  // const [isOpen, setIsOpen] = useState(false);
   const [latestReleases, setLatestReleases] = useState<Movie[]>([]);
+  const [genresList, setGenresList] = useState<Genre[]>([]);
 
-  const TMDB_IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/original";
-
-  const testImage = `${TMDB_IMAGE_ENDPOINT}/d9nBoowhjiiYc4FBNtQkPY7c11H.jpg`;
-
-  // https://movieql.netlify.app/graphql
-
-  // {
-  //   topRatedShows {
-  //    shows {
-  //      name
-  //      original_name
-  //      original_language
-  //      overview
-  //      poster_path
-  //    }
-  //  }
-  //  }
+  // SECCION CATEGORIAS
+  // mostrar
 
   useEffect(() => {
     const getData = async () => {
@@ -35,23 +29,61 @@ function App() {
       return data;
     };
 
+    const genresList = async () => {
+      const data = await getAllGenres<Genre>();
+
+      return data;
+    };
+
+    genresList()
+      .then((data) => {
+        const genres = data?.genres;
+        if (genres) setGenresList(genres);
+      })
+      .catch((err) => err);
+
     getData()
       .then((res) => {
         const moviesArray = res?.data.nowPlayingMovies.movies;
-        console.log("latest releases ", moviesArray);
 
         if (moviesArray) setLatestReleases(moviesArray);
       })
       .catch((err) => err);
   }, []);
 
+  const location = useLocation();
+
+  const state = location.state as { backgroundLocation?: Location };
+
   return (
     <div className="App">
-      <Collection
-        data={latestReleases}
-        title={"hellou"}
-        isLatestReleases={false}
-      />
+      <Routes location={state?.backgroundLocation || location}>
+        <Route path="/search" element={<Search />} />
+
+        <Route
+          path="/"
+          element={
+            <Collection
+              data={latestReleases}
+              title={"hellou"}
+              isLatestReleases={false}
+            />
+          }
+        />
+      </Routes>
+      {state?.backgroundLocation && (
+        <Routes>
+          <Route
+            path="/movie/:id"
+            element={
+              <Modal>
+                <MovieDetail />
+              </Modal>
+            }
+          />
+          )
+        </Routes>
+      )}
     </div>
   );
 }

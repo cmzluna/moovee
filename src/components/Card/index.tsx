@@ -1,5 +1,6 @@
 import React from "react";
-import { Movie } from "../Collection";
+import { Link, useLocation } from "react-router-dom";
+import { Movie } from "../../types";
 
 export default function Card({
   id,
@@ -8,36 +9,42 @@ export default function Card({
   poster_path,
   release_date,
   vote_average,
+  genres,
 }: Movie) {
-  const TMDB_IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/original";
+  const location = useLocation();
+  const TMDB_IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/w300";
 
-  const testImage = `${TMDB_IMAGE_ENDPOINT}/d9nBoowhjiiYc4FBNtQkPY7c11H.jpg`;
+  const testImage = `${TMDB_IMAGE_ENDPOINT}/${poster_path}`;
 
   const handleClick = () => {
-    console.log("clicked!");
+    console.log("location en Card ", location);
   };
 
+  console.log("genres => ", genres);
   return (
-    <div
-      className="bg-blue-900 card-hover-animation mb-4  cursor-pointer"
-      onClick={handleClick}
-    >
-      <div className="relative w-full rounded-lg">
-        <div className="relative h-[133px] md:h-[140px] lg:h-[174px]">
-          {/* <Image
-          className='rounded-lg'
-          src={src}
-          alt={alt}
-          layout='fill'
-          objectFit='cover'
-          placeholder='blur'
-          blurDataURL={`data:image/svg+xml;base64,${toBase64(
-            shimmer(240, 140)
-          )}`}
-          unoptimized
-        /> */}
+    <Link key={id} to={`/movie/${id}`} state={{ backgroundLocation: location }}>
+      <div
+        className="relative bg-blue-900 card-hover-animation mb-4 rounded-md overflow-hidden cursor-pointer"
+        onClick={handleClick}
+      >
+        <span className="absolute top-2 right-2">{vote_average}</span>
+        <img
+          src={testImage}
+          alt="stew"
+          className="h-[140px] md:h-[200px] lg:h-[240px] w-full object-cover object-center"
+        />
+        <div className="m-4">
+          <span className="font-bold">{original_title}</span>
+          <span className="block text-gray-500 text-sm">
+            {original_language}
+          </span>
+          <span className="block text-gray-500 text-sm">
+            {genres &&
+              genres.map((genre) => <p key={genre.id}>{genre.name}</p>)}
+          </span>
+          <span className="block text-gray-500 text-sm">{release_date}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

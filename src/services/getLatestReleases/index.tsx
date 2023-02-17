@@ -11,9 +11,15 @@ const GET_LATEST = `
       poster_path
       release_date
       vote_average
+    
   }
  }
 }`;
+
+// genres {
+//   id
+//   name
+// }
 
 type GetLatestMovies = {
   nowPlayingMovies: { movies: Movie[] };

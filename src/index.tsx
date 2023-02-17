@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 import "./index.css";
 import App from "./App";
 import Layout from "./components/Layout";
@@ -9,8 +11,14 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Layout>
-      <App />
-    </Layout>
+    <Router>
+      <Layout>
+        <App />
+      </Layout>
+    </Router>
   </React.StrictMode>
 );
+
+{
+  /* <Route path="*" component={NotFound} /> */
+}

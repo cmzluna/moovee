@@ -49,6 +49,9 @@ module.exports = {
         xs: "420px",
         ...defaultTheme.screens,
       },
+      maxWidth: {
+        "3/4": "75%",
+      },
     },
   },
   plugins: [],

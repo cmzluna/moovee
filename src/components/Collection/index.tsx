@@ -2,23 +2,14 @@ import React from "react";
 import Card from "../Card";
 import Heading from "../Heading";
 import Loading from "../Loading";
-
-export type Movie = {
-  id: string;
-  original_title: string;
-  original_language: string;
-  poster_path: string;
-  release_date: string;
-  vote_average: number;
-};
+import { Movie } from "../../types";
 
 type Props = {
   data: Movie[];
   title: string;
   type?: string;
   isLatestReleases: boolean;
-  // isOpen: boolean;
-  // setIsOpen: (arg0: boolean) => void;
+  // hasSelector: boolean;
 };
 
 export default function Collection({
@@ -27,10 +18,11 @@ export default function Collection({
   type = "movie",
   isLatestReleases,
 }: Props) {
-  const TMDB_IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/original";
-
+  const TMDB_IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/w300";
+  const baseImageURL = "https://image.tmdb.org/t/p/w300";
   const testImage = `${TMDB_IMAGE_ENDPOINT}/d9nBoowhjiiYc4FBNtQkPY7c11H.jpg`;
 
+  console.log("EN COLLECTION");
   return (
     <>
       <section className="border-2 border-solid border-red-300 mb-6 md:mb-10">
@@ -52,6 +44,7 @@ export default function Collection({
                 original_language={item.original_language}
                 release_date={item.release_date}
                 vote_average={item.vote_average}
+                genres={item.genres}
               />
             ))}
         </section>
