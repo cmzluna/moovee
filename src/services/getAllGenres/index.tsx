@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Genre } from "../../types";
 
 const axiosInstance = axios.create({
   baseURL: "https://api.themoviedb.org/3/genre/movie/list",
@@ -17,14 +16,4 @@ export default async function getAllGenres<T>() {
       return Promise.reject(error.response.data);
     }
   }
-
-  //   try {
-  //     const { data } = await axiosInstance.get<{ data: T }>("");
-  //     return data;
-  //   } catch (error) {
-  //     console.log("** ERROR => ", error);
-  //     if (axios.isAxiosError(error) && error.response?.data) {
-  //       return Promise.reject(error.response.data);
-  //     }
-  //   }
 }

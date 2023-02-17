@@ -65,7 +65,7 @@ function App() {
           element={
             <Collection
               data={latestReleases}
-              title={"hellou"}
+              title={"Latest Releases"}
               isLatestReleases={false}
             />
           }

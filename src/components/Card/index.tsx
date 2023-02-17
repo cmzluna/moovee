@@ -20,7 +20,6 @@ export default function Card({
     console.log("location en Card ", location);
   };
 
-  console.log("genres => ", genres);
   return (
     <Link key={id} to={`/movie/${id}`} state={{ backgroundLocation: location }}>
       <div
