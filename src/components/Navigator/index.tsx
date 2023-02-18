@@ -61,11 +61,14 @@ const Navigator = () => {
       </div>
 
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
-        <div className="border border-gray-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
-          <div className="animate-pulse flex space-x-4">
-            <div className="rounded-full bg-gray-400 h-12 w-12"></div>
+        <>
+          <header className="font-bold text-lg">Your favorites</header>
+          <div className="border border-gray-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+            <div className="animate-pulse flex space-x-4">
+              <div className="rounded-full bg-gray-400 h-12 w-12"></div>
+            </div>
           </div>
-        </div>
+        </>
       </Drawer>
     </nav>
   );

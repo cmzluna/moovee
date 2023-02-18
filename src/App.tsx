@@ -11,13 +11,14 @@ import getLatestReleases from "./services/getLatestReleases";
 import Collection from "./components/Collection";
 import Search from "./components/Search";
 import MovieDetail from "./components/MovieDetail";
-import Modal from "./components/Modal";
 import getAllGenres from "./services/getAllGenres";
 import { Genre } from "./types";
+import Drawer from "./components/Drawer";
 
 function App() {
   const [latestReleases, setLatestReleases] = useState<Movie[]>([]);
   const [genresList, setGenresList] = useState<Genre[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   // SECCION CATEGORIAS
   // mostrar
@@ -76,9 +77,9 @@ function App() {
           <Route
             path="/movie/:id"
             element={
-              <Modal>
+              <Drawer type="MovieDetail" isOpen={true} setIsOpen={setIsOpen}>
                 <MovieDetail />
-              </Modal>
+              </Drawer>
             }
           />
           )
