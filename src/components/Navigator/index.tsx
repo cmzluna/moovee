@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import Drawer from "../Drawer";
+import Favorites from "../Favorites";
+import { State } from "../../types";
 
 const Navigator = () => {
   const [isOpen, setIsOpen] = useState(false);
+  // const userData = useSelector((state: State) => state.user);
 
   return (
     <nav className="  sticky top-0 z-50 flex items-center justify-between bg-indigo-500  md:mx-4 md:mt-4 md:mb-[33px] md:rounded-[10px] lg:fixed lg:left-0 lg:mr-0 lg:h-3/6 lg:flex-col lg:py-4 ">
@@ -63,11 +67,8 @@ const Navigator = () => {
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
         <>
           <header className="font-bold text-lg">Your favorites</header>
-          <div className="border border-gray-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
-            <div className="animate-pulse flex space-x-4">
-              <div className="rounded-full bg-gray-400 h-12 w-12"></div>
-            </div>
-          </div>
+
+          <Favorites />
         </>
       </Drawer>
     </nav>

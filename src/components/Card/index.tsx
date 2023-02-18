@@ -17,13 +17,13 @@ export default function Card({
   const testImage = `${TMDB_IMAGE_ENDPOINT}/${poster_path}`;
 
   const handleClick = () => {
-    console.log("location en Card ", location);
+    //  console.log("location en Card ", location);
   };
 
   return (
     <Link key={id} to={`/movie/${id}`} state={{ backgroundLocation: location }}>
       <div
-        className="relative bg-blue-900 card-hover-animation mb-4 rounded-md overflow-hidden cursor-pointer"
+        className="relative  hover:animate-pulse bg-blue-900 card-hover-animation mb-4 rounded-md overflow-hidden cursor-pointer"
         onClick={handleClick}
       >
         <span className="absolute top-2 right-2">{vote_average}</span>

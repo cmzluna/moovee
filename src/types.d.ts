@@ -13,3 +13,16 @@ export interface Movie {
   vote_average: number;
   genres: Genre[]!;
 }
+
+export interface User {
+  id: string;
+  avatar: string;
+  firstname: string;
+  lastname: string;
+  username: string;
+}
+
+export interface State {
+  user: null | User;
+  favorites: null | Movie[];
+}
