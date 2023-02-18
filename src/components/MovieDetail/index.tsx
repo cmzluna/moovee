@@ -1,20 +1,48 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import getMovieApi from "../../services/getMovie";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import {
+  addFavorite,
+  removeFavorite,
+  selectFavorites,
+} from "../../store/slices/favorites";
 import { Movie } from "../../types";
 
 const MovieDetail = () => {
   const navigate = useNavigate();
+  const favoritesList = useAppSelector(selectFavorites);
+  const dispatch = useAppDispatch();
 
   const { id } = useParams();
   const movieId = id && parseInt(id);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
+  const isFavorite = favoritesList.some(({ id }) => id === movieId);
+
   const baseImageURL = "https://image.tmdb.org/t/p/w300";
   const posterImageURL = `https://image.tmdb.org/t/p/original${selectedMovie?.poster_path}`;
 
+  const isMovieSelected = selectedMovie && !!Object.keys(selectedMovie).length;
+
+  selectedMovie &&
+    console.log(
+      "!!Object.keys(selectedMovie).length = ",
+      !!Object.keys(selectedMovie).length
+    );
+
   const addToFavorite = () => {
-    console.log("clicked add to favorites");
+    console.log("isFavorite ? ", isFavorite);
+    console.log("isMovieSelected = ", isMovieSelected);
+    console.log("selectedMovie = ", selectedMovie);
+    if (isMovieSelected && isFavorite) {
+      console.log("en if!");
+      dispatch(removeFavorite(selectedMovie));
+      return;
+    }
+
+    isMovieSelected && dispatch(addFavorite(selectedMovie));
+    return;
   };
 
   useEffect(() => {
@@ -24,21 +52,20 @@ const MovieDetail = () => {
       return data;
     };
 
-    if (movieId) {
+    if (movieId && !isMovieSelected) {
       getMovie(movieId)
         .then((res) => {
           const movie = res?.data.movieDetail.movie;
-          console.log("fetched movie =>  ", movie);
 
           if (movie) setSelectedMovie(movie);
         })
         .catch((err) => err);
     }
-  }, [id]);
+  }, [id, isFavorite]);
 
   return (
     <div
-      className="  h-full w-full  bg-red-800 top-32 lg:top-20 left-16 lg:left-32 right-16 rounded-lg"
+      className=" h-full w-full  bg-red-800 top-32 lg:top-20 left-16 lg:left-32 right-16 rounded-lg"
       style={{
         border: "2px solid #444",
       }}
@@ -59,8 +86,11 @@ const MovieDetail = () => {
                 className="bg-gray-400 rounded-md m-4 p-4"
                 onClick={addToFavorite}
               >
-                Add to favorite
+                Toggle favorite
               </button>
+              {isFavorite && (
+                <p className="  text-white">Added to favorites list</p>
+              )}
             </div>
 
             <div className="   bg-gray-600 h-full relative w-full md:max-w-md md:basis-2/3 lg:max-w-2xl px-2 mx-auto xl:max-w-4xl">

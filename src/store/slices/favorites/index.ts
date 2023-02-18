@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { Movie } from "../../../types";
+import { RootState } from "../..";
 
 const initialState: Movie[] = [];
 
@@ -14,7 +15,7 @@ export const favoritesSlice = createSlice({
 
     removeFavorite: (state, action: PayloadAction<Movie>) => {
       const favoriteToDelete = action.payload;
-      state = state.filter(
+      return state.filter(
         (favorite: Movie) => favorite.id !== favoriteToDelete.id
       );
     },
@@ -22,5 +23,6 @@ export const favoritesSlice = createSlice({
 });
 
 export const { addFavorite, removeFavorite } = favoritesSlice.actions;
+export const selectFavorites = (state: RootState) => state.favorites;
 
 export default favoritesSlice.reducer;

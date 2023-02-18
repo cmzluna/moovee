@@ -15,13 +15,7 @@ export const usersSlice = createSlice({
     createUser: (state, action: PayloadAction<User>) => {
       state.push(action.payload);
     },
-    modifyUser: (state, action: PayloadAction<User>) => {
-      const editedUser = action.payload;
 
-      const foundUser = state.find((user: User) => user.id === editedUser.id);
-
-      if (editedUser.name && foundUser) foundUser.name = editedUser.name;
-    },
     deleteUser: (state, action: PayloadAction<User>) => {
       const userToDelete = action.payload;
       state = state.filter((user: User) => user.id !== userToDelete.id);
@@ -30,7 +24,6 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { createUser, modifyUser, deleteUser, resetUser } =
-  usersSlice.actions;
+export const { createUser, deleteUser, resetUser } = usersSlice.actions;
 
 export default usersSlice.reducer;

@@ -8,7 +8,7 @@ type Props = {
   data: Movie[];
   title: string;
   type?: string;
-  isLatestReleases: boolean;
+  isLatestReleases?: boolean;
   // hasSelector: boolean;
 };
 
